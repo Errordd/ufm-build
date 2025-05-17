@@ -11,14 +11,13 @@ import flixel.util.FlxStringUtil;
 import states.StoryMenuState;
 import states.FreeplayState;
 import options.OptionsState;
-import objects.StereoWave;
 
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart', 'Options', 'Exit'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -30,8 +29,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	var missingTextBG:FlxSprite;
 	var missingText:FlxText;
-
-	var waveform:StereoWave;
 
 	public static var songName:String = null;
 
@@ -81,11 +78,6 @@ class PauseSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 		add(bg);
 
-		waveform = new StereoWave(50, 50, Std.int(FlxG.width - 100), 200, pauseMusic);
-		waveform.alpha = 0;
-		waveform.updateWaveformStyle(0xFF3D85C6, 0xFF5BBEFF, 4, 2); // Color, RMS color, bar size, bar padding
-		add(waveform);
-
 		var levelInfo:FlxText = new FlxText(20, 15, 0, PlayState.SONG.song, 32);
 		levelInfo.scrollFactor.set();
 		levelInfo.setFormat(Paths.font("vcr.ttf"), 32);
@@ -130,7 +122,6 @@ class PauseSubState extends MusicBeatSubstate
 		blueballedTxt.x = FlxG.width - (blueballedTxt.width + 20);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		FlxTween.tween(waveform, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.2});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(blueballedTxt, {alpha: 1, y: blueballedTxt.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
@@ -175,7 +166,7 @@ class PauseSubState extends MusicBeatSubstate
 			pauseMusic.volume += 0.01 * elapsed;
 
 		super.update(elapsed);
-		
+
 		if(controls.BACK)
 		{
 			close();
@@ -272,7 +263,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
-				case "Restart":
+				case "Restart Song":
 					restartSong();
 				case "Leave Charting Mode":
 					restartSong();
@@ -404,38 +395,34 @@ class PauseSubState extends MusicBeatSubstate
 	}
 
 	function regenMenu():Void {
-    	for (i in 0...grpMenuShit.members.length) {
-        	var obj = grpMenuShit.members[0];
-        	obj.kill();
-        	grpMenuShit.remove(obj, true);
-        	obj.destroy();
-    	}
+		for (i in 0...grpMenuShit.members.length) {
+			var obj = grpMenuShit.members[0];
+			obj.kill();
+			grpMenuShit.remove(obj, true);
+			obj.destroy();
+		}
 
-    	for (i in 0...menuItems.length) {
-        	var item = new Alphabet(0, 320, menuItems[i], true);
-        	item.isMenuItem = true;
-        	item.targetY = i;
-        	item.alignment = CENTERED;
-			item.changeX = false; 
-        	item.x = FlxG.width / 2; 
-        	item.startPosition.x = FlxG.width / 2;
-        	grpMenuShit.add(item);
+		for (i in 0...menuItems.length) {
+			var item = new Alphabet(90, 320, menuItems[i], true);
+			item.isMenuItem = true;
+			item.targetY = i;
+			grpMenuShit.add(item);
 
-        	if(menuItems[i] == 'Skip Time')
-        	{
-            	skipTimeText = new FlxText(0, 0, 0, '', 64);
-            	skipTimeText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-            	skipTimeText.scrollFactor.set();
-            	skipTimeText.borderSize = 2;
-            	skipTimeTracker = item;
-            	add(skipTimeText);
+			if(menuItems[i] == 'Skip Time')
+			{
+				skipTimeText = new FlxText(0, 0, 0, '', 64);
+				skipTimeText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				skipTimeText.scrollFactor.set();
+				skipTimeText.borderSize = 2;
+				skipTimeTracker = item;
+				add(skipTimeText);
 
-            	updateSkipTextStuff();
-            	updateSkipTimeText();
-        	}
-    	}
-    	curSelected = 0;
-    	changeSelection();
+				updateSkipTextStuff();
+				updateSkipTimeText();
+			}
+		}
+		curSelected = 0;
+		changeSelection();
 	}
 	
 	function updateSkipTextStuff()

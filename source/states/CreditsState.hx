@@ -1,5 +1,6 @@
 package states;
 
+import flxanimate.animate.FlxLabel;
 import objects.AttachedSprite;
 
 class CreditsState extends MusicBeatState
@@ -127,8 +128,7 @@ class CreditsState extends MusicBeatState
 		bg.color = CoolUtil.colorFromString(creditsStuff[curSelected][4]);
 		intendedColor = bg.color;
 		changeSelection();
-		super.create();
-	}
+		super.create();	}
 
 	var quitting:Bool = false;
 	var holdTime:Float = 0;

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="pkweektitlecard.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="weekthesubway0000" x="0" y="0" width="622" height="449"/>
+	<SubTexture name="weekthesubway0001" x="0" y="0" width="622" height="449"/>
+	<SubTexture name="weekthesubway0002" x="622" y="0" width="587" height="424" frameX="-20" frameY="-9" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0003" x="622" y="0" width="587" height="424" frameX="-20" frameY="-9" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0004" x="1209" y="0" width="596" height="431" frameX="-15" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0005" x="1209" y="0" width="596" height="431" frameX="-15" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0006" x="0" y="449" width="598" height="431" frameX="-14" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0007" x="0" y="449" width="598" height="431" frameX="-14" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0008" x="0" y="449" width="598" height="431" frameX="-14" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0009" x="0" y="449" width="598" height="431" frameX="-14" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0010" x="0" y="449" width="598" height="431" frameX="-14" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0011" x="0" y="449" width="598" height="431" frameX="-14" frameY="-7" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0012" x="598" y="449" width="572" height="416" frameX="-29" frameY="-11" frameWidth="622" frameHeight="449"/>
+	<SubTexture name="weekthesubway0013" x="598" y="449" width="572" height="416" frameX="-29" frameY="-11" frameWidth="622" frameHeight="449"/>
+</TextureAtlas>

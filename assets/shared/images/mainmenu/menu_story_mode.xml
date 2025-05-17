@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menu_story_mode.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 40000" x="0" y="0" width="435" height="194"/>
+	<SubTexture name="Symbol 4 copy 20000" x="435" y="0" width="435" height="194"/>
+	<SubTexture name="Symbol 4 copy 30000" x="0" y="194" width="408" height="182" frameX="-15" frameY="-9" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30001" x="0" y="194" width="408" height="182" frameX="-15" frameY="-9" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30002" x="408" y="194" width="440" height="197"/>
+	<SubTexture name="Symbol 4 copy 30003" x="408" y="194" width="440" height="197"/>
+	<SubTexture name="Symbol 4 copy 30004" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30005" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30006" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30007" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30008" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30009" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30010" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30011" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30012" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+	<SubTexture name="Symbol 4 copy 30013" x="0" y="391" width="435" height="194" frameX="-2" frameY="-2" frameWidth="440" frameHeight="197"/>
+</TextureAtlas>

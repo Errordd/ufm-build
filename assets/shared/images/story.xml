@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="story.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 40000" x="0" y="0" width="435" height="194"/>
+	<SubTexture name="Symbol 4 copy0000" x="0" y="194" width="391" height="174"/>
+</TextureAtlas>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="pkweekchar.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="pk0000" x="0" y="0" width="658" height="943" frameX="0" frameY="-10" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0001" x="0" y="0" width="658" height="943" frameX="0" frameY="-10" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0002" x="658" y="0" width="649" height="953" frameX="-6" frameY="0" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0003" x="658" y="0" width="649" height="953" frameX="-6" frameY="0" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0004" x="1307" y="0" width="652" height="953" frameX="-10" frameY="0" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0005" x="1307" y="0" width="652" height="953" frameX="-10" frameY="0" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0006" x="0" y="953" width="653" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0007" x="0" y="953" width="653" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0008" x="653" y="953" width="654" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0009" x="653" y="953" width="654" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0010" x="653" y="953" width="654" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0011" x="653" y="953" width="654" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0012" x="653" y="953" width="654" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+	<SubTexture name="pk0013" x="653" y="953" width="654" height="952" frameX="-10" frameY="-1" frameWidth="664" frameHeight="953"/>
+</TextureAtlas>

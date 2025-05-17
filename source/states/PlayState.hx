@@ -575,7 +575,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.data.downScroll)
 			botplayTxt.y = timeTxt.y - 78;
 
-		uiGroup.cameras = [camHUD];
+		uiGroup.cameras = [camOther];
 		noteGroup.cameras = [camHUD];
 		comboGroup.cameras = [camHUD];
 

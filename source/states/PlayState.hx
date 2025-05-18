@@ -6,6 +6,7 @@ import backend.WeekData;
 import backend.Song;
 import backend.Section;
 import backend.Rating;
+import modchart.Manager;
 
 import flixel.FlxBasic;
 import flixel.FlxObject;
@@ -24,6 +25,9 @@ import lime.graphics.Image;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.events.KeyboardEvent;
 import haxe.Json;
+import modchart.events.*;
+import modchart.modifiers.*;
+import modchart.modifiers.false_paradise.*;
 
 import cutscenes.CutsceneHandler;
 import cutscenes.DialogueBoxPsych;
@@ -277,6 +281,9 @@ class PlayState extends MusicBeatState
 	// Callbacks for stages
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
+
+    // Modcharts
+    public var modchartMgr:Manager;
 
 	override public function create()
 	{
@@ -568,7 +575,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.data.downScroll)
 			botplayTxt.y = timeTxt.y - 78;
 
-		uiGroup.cameras = [camHUD];
+		uiGroup.cameras = [camOther];
 		noteGroup.cameras = [camHUD];
 		comboGroup.cameras = [camHUD];
 
@@ -630,6 +637,9 @@ class PlayState extends MusicBeatState
 			Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic));
 
 		resetRPC();
+
+        modchartMgr = new Manager();
+        add(modchartMgr);
 
 		callOnScripts('onCreatePost');
 
@@ -1052,72 +1062,6 @@ class PlayState extends MusicBeatState
     	spr.screenCenter();
     	spr.antialiasing = antialias;
     	insert(members.indexOf(noteGroup), spr);
-    
-    	var isGoSprite:Bool = (image.endsWith("go") || image.endsWith("date-pixel"));
-    
-    	if (isGoSprite) {
-        	for (i in 0...playerStrums.length) {
-            	var originalY = playerStrums.members[i].y;
-            	var originalScaleX = playerStrums.members[i].scale.x;
-            	var originalScaleY = playerStrums.members[i].scale.y;
-            
-            	playerStrums.members[i].angle = 0;
-            
-            	FlxTween.tween(playerStrums.members[i].scale, {x: 0.8, y: 0.8}, Conductor.crochet / 1200, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(playerStrums.members[i].scale, {x: originalScaleX, y: originalScaleY}, Conductor.crochet / 1200, {
-                        	ease: FlxEase.quadIn
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(playerStrums.members[i], {y: originalY - 15}, Conductor.crochet / 1000, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(playerStrums.members[i], {y: originalY}, Conductor.crochet / 800, {
-                        	ease: FlxEase.bounceOut
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(playerStrums.members[i], {angle: 360}, Conductor.crochet / 500, {
-                	ease: FlxEase.quintOut,
-                	startDelay: i * 0.05
-            	});
-        	}
-        
-        	for (i in 0...opponentStrums.length) {
-            	var originalY = opponentStrums.members[i].y;
-            	var originalScaleX = opponentStrums.members[i].scale.x;
-            	var originalScaleY = opponentStrums.members[i].scale.y;
-            
-            	opponentStrums.members[i].angle = 0;
-            
-            	FlxTween.tween(opponentStrums.members[i].scale, {x: 0.8, y: 0.8}, Conductor.crochet / 1200, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(opponentStrums.members[i].scale, {x: originalScaleX, y: originalScaleY}, Conductor.crochet / 1200, {
-                        	ease: FlxEase.quadIn
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(opponentStrums.members[i], {y: originalY - 15}, Conductor.crochet / 1000, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(opponentStrums.members[i], {y: originalY}, Conductor.crochet / 800, {
-                        	ease: FlxEase.bounceOut
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(opponentStrums.members[i], {angle: -360}, Conductor.crochet / 500, {
-                	ease: FlxEase.quintOut,
-                	startDelay: i * 0.05
-            	});
-        	}
-    	}
     
     	FlxTween.tween(spr, {alpha: 0}, Conductor.crochet / 1000, {
         	ease: FlxEase.cubeOut,
@@ -2689,8 +2633,7 @@ class PlayState extends MusicBeatState
 				return false;
 			}
 		}
-
-		timeBar.visible = false;
+        
 		timeTxt.visible = false;
 		canPause = false;
 		endingSong = true;

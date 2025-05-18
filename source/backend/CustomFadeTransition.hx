@@ -16,27 +16,27 @@ class CustomFadeTransition extends MusicBeatSubstate {
 	
 	var patterns:Array<Array<Array<Int>>> = [
 		[
+			[1,0,1,0],
 			[0,0,0,0],
-			[0,1,0,0],
-			[0,0,0,0],
+			[1,0,0,0],
 			[0,0,0,1]
 		],
 		[
-			[1,0,0,1],
-			[0,0,1,0],
+			[1,0,1,0],
+			[0,0,0,1],
 			[0,1,0,0],
 			[1,0,0,1]
 		],
 		[
-			[1,0,1,1],
-			[0,1,1,0],
-			[1,1,0,1],
-			[1,0,1,1]
+			[1,0,1,0],
+			[0,1,0,1],
+			[1,0,1,0],
+			[0,1,0,1]
 		],
 		[
 			[1,1,1,1],
-			[1,0,1,1],
-			[1,1,1,0],
+			[1,1,1,1],
+			[1,1,1,1],
 			[1,1,1,1]
 		]
 	];
@@ -81,7 +81,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		ditherSprite.screenCenter(X);
 		add(ditherSprite);
 
-		if (!isTransIn) {
+		if (isTransIn) {
 			currentFrame = patterns.length - 1;
 			updateDitherPattern(patterns[patterns.length - 1]);
 		}
@@ -97,21 +97,21 @@ class CustomFadeTransition extends MusicBeatSubstate {
 			frameTimer = 0;
 			
 			if (isTransIn) {
-				if (currentFrame < patterns.length) {
-					updateDitherPattern(patterns[currentFrame]);
-					currentFrame++;
-				}
-			} else {
 				if (currentFrame >= 0) {
 					if (currentFrame < patterns.length) {
 						updateDitherPattern(patterns[currentFrame]);
 					}
 					currentFrame--;
 				}
+			} else {
+                if (currentFrame < patterns.length) {
+					updateDitherPattern(patterns[currentFrame]);
+					currentFrame++;
+				}
 			}
 		}
 
-		if ((isTransIn && currentFrame >= patterns.length) || (!isTransIn && currentFrame < 0)) {
+		if ((!isTransIn && currentFrame >= patterns.length) || (isTransIn && currentFrame < 0)) {
 			close();
 			if (finishCallback != null) finishCallback();
 			finishCallback = null;

@@ -1,25 +1,33 @@
 import modchart.modifiers.*;
+import modchart.modifiers.false_paradise.*;
 
-function onCreate()
-{
-    PlayState.instance.skipCountdown = true;
-}
-function onSongStart()
+//function onCreate()
+//{
+//    PlayState.instance.skipCountdown = true;
+//}
+
+function onCreatePost()
 {
     modchartMgr.renderArrowPaths = true;
+    rotateStrums();
+}
+
+function rotateStrums()
+{
     modchartMgr.registerModifier("rotateX", Rotate);
     modchartMgr.addModifier("rotateX");
-    modchartMgr.set("rotateX", 0, 60);
-    modchartMgr.registerModifier("z", Transform);
-    modchartMgr.addModifier("z");
-    modchartMgr.set("z", 0, -300);
-    modchartMgr.registerModifier("y", Transform);
-    modchartMgr.addModifier("y");
-    modchartMgr.set("y", 0, 100);
-    modchartMgr.registerModifier("drugged", Drugged);
-    modchartMgr.addModifier("drugged");
-    modchartMgr.set("drugged", 0, 1);
-    modchartMgr.registerModifier("tornado", Tornado);
-    modchartMgr.addModifier("tornado");
-    modchartMgr.set("tornado", 0, 0.3);
+    modchartMgr.setPercent("rotateX", 60);
+    if (ClientPrefs.data.downScroll)
+    {
+        modchartMgr.registerModifier("z", Transform);
+        modchartMgr.addModifier("z");
+        modchartMgr.setPercent("z", -300);
+        modchartMgr.registerModifier("y", Transform);
+        modchartMgr.addModifier("y");
+        modchartMgr.setPercent("y", 100);
+    }else{
+        modchartMgr.registerModifier("z", Transform);
+        modchartMgr.addModifier("z");
+        modchartMgr.setPercent("z", -500);
+    }
 }

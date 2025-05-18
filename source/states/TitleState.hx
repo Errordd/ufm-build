@@ -306,8 +306,8 @@ class TitleState extends MusicBeatState
 			checkerBG.x -= 0.45 * elapsed * 60;
 			checkerBG.y -= 0.16 * elapsed * 60;
 			
-			if(checkerBG.x < -checkerBG.width) checkerBG.x = 0;
-			if(checkerBG.y < -checkerBG.height) checkerBG.y = 0;
+			if(checkerBG.x < -checkerBG.width) checkerBG.x += checkerBG.width;
+			if(checkerBG.y < -checkerBG.height) checkerBG.y += checkerBG.height;
 		}
 		
 		if (FlxG.sound.music != null)

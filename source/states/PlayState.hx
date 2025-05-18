@@ -2354,6 +2354,238 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound(value1), flValue2);
 		}
 
+		case 'NoteBounce': //for u solar idk
+    		if(flValue1 != null && flValue1 <= 0) {
+        		variables.set("noteBounceActive", false);
+        
+        		if(variables.exists("noteBounceActiveTweens")) {
+            		var activeTweens:Array<FlxTween> = variables.get("noteBounceActiveTweens");
+            		for(tween in activeTweens) {
+                		if(tween != null && !tween.finished) {
+                    		tween.cancel();
+                		}
+            		}
+            		variables.set("noteBounceActiveTweens", []);
+        		}
+        
+        		for(i in 0...playerStrums.length) {
+            		var strum = playerStrums.members[i];
+            		if(strum != null && strum.exists) {
+                		var origX = variables.get("playerStrum" + i + "X");
+                		var origY = variables.get("playerStrum" + i + "Y");
+                		if(origX != null && origY != null) {
+                    		FlxTween.tween(strum, {angle: 0}, 0.5, {ease: FlxEase.elasticOut});
+                    		FlxTween.tween(strum.scale, {x: 0.7, y: 0.7}, 0.5, {ease: FlxEase.elasticOut});
+                    		FlxTween.tween(strum, {x: origX, y: origY}, 0.5, {ease: FlxEase.elasticOut});
+                		}
+            		}
+        		}
+        
+        		for(i in 0...opponentStrums.length) {
+            		var strum = opponentStrums.members[i];
+            		if(strum != null && strum.exists) {
+                		var origX = variables.get("opponentStrum" + i + "X");
+                		var origY = variables.get("opponentStrum" + i + "Y");
+                		if(origX != null && origY != null) {
+                    		FlxTween.tween(strum, {angle: 0}, 0.5, {ease: FlxEase.elasticOut});
+                    		FlxTween.tween(strum.scale, {x: 0.7, y: 0.7}, 0.5, {ease: FlxEase.elasticOut});
+                    		FlxTween.tween(strum, {x: origX, y: origY}, 0.5, {ease: FlxEase.elasticOut});
+                		}
+            		}
+        		}
+    		} else {
+        		var intensity:Float = 1.5;
+        		var duration:Float = 0.5;
+        
+        		if(flValue1 != null) intensity = flValue1 * 1.5; 
+        		if(flValue2 != null) duration = flValue2 * 0.8; 
+        
+        		variables.set("noteBounceActive", true);
+        
+        		if(!variables.exists("noteBounceActiveTweens")) {
+            		variables.set("noteBounceActiveTweens", []);
+        		}
+        
+        		for(i in 0...playerStrums.length) {
+            		var strum = playerStrums.members[i];
+            		if(strum != null && strum.exists) {
+                		variables.set("playerStrum" + i + "X", strum.x);
+                		variables.set("playerStrum" + i + "Y", strum.y);
+            		}	
+        		}
+        
+        		for(i in 0...opponentStrums.length) {
+            		var strum = opponentStrums.members[i];
+            		if(strum != null && strum.exists) {
+                		variables.set("opponentStrum" + i + "X", strum.x);
+                		variables.set("opponentStrum" + i + "Y", strum.y);
+            		}
+        		}
+        
+        		function startNoteBounce() {
+            		if(variables.get("noteBounceActive") != true) return;
+            
+            		var activeTweens:Array<FlxTween> = variables.get("noteBounceActiveTweens");
+            		for(tween in activeTweens) {
+                		if(tween != null && !tween.finished) {
+                    		tween.cancel();
+                		}
+            		}
+            		activeTweens = [];
+            		variables.set("noteBounceActiveTweens", activeTweens);
+            
+            		for(i in 0...playerStrums.length) {
+                		var strum = playerStrums.members[i];
+                		if(strum != null && strum.exists) {
+                    		var originalY = variables.get("playerStrum" + i + "Y");
+                    		var originalX = variables.get("playerStrum" + i + "X");
+                    		var originalAngle = 0;
+                    
+                    		var delay = Math.sin(i * 0.8) * 0.08;
+                    
+                    		var randomOffsetX = FlxG.random.float(-25, 25) * intensity;
+                    		var randomOffsetY = FlxG.random.float(-60, -30) * intensity;
+                    		var randomAngle = FlxG.random.float(-45, 45) * intensity;
+                    
+                    		var scaleTween = FlxTween.tween(strum.scale, {x: 1.5, y: 0.4}, duration * 0.15, {
+                        		ease: FlxEase.circOut,
+                        		startDelay: delay,
+                        		onComplete: function(twn:FlxTween) {
+                            		if (strum != null && strum.exists) {
+                                		var resetTween = FlxTween.tween(strum.scale, {x: 0.5, y: 1.3}, duration * 0.2, {
+                                    		ease: FlxEase.backOut,
+                                    		onComplete: function(twn:FlxTween) {
+                                        		if (strum != null && strum.exists) {
+                                            		var finalTween = FlxTween.tween(strum.scale, {x: 0.7, y: 0.7}, duration * 0.65, {
+                                                		ease: FlxEase.elasticOut
+                                            		});
+                                            		activeTweens.push(finalTween);
+                                        		}
+                                    		}
+                                		});
+                                		activeTweens.push(resetTween);
+                            		}
+                        		}
+                    		});
+                    activeTweens.push(scaleTween);
+                    
+                    var posTween = FlxTween.tween(strum, {
+                        x: originalX + randomOffsetX,
+                        y: originalY + randomOffsetY,
+                        angle: originalAngle + randomAngle
+                    }, duration * 0.25, {
+                        ease: FlxEase.circOut,
+                        startDelay: delay,
+                        onComplete: function(twn:FlxTween) {
+                            if (strum != null && strum.exists) {
+                                var resetTween = FlxTween.tween(strum, {
+                                    x: originalX - (randomOffsetX * 0.3),
+                                    y: originalY - (randomOffsetY * 0.2),
+                                    angle: originalAngle - (randomAngle * 0.4)
+                                }, duration * 0.3, {
+                                    ease: FlxEase.backOut,
+                                    onComplete: function(twn:FlxTween) {
+                                        if (strum != null && strum.exists) {
+                                            var finalTween = FlxTween.tween(strum, {
+                                                x: originalX,
+                                                y: originalY,
+                                                angle: originalAngle
+                                            }, duration * 0.45, {
+                                                ease: FlxEase.elasticOut
+                                            });
+                                            		activeTweens.push(finalTween);
+                                        		}
+                                    		}
+                                		});
+                                		activeTweens.push(resetTween);
+                            		}
+                        		}
+                    		});
+                    		activeTweens.push(posTween);
+                		}
+            		}
+            
+            		for(i in 0...opponentStrums.length) {
+                		var strum = opponentStrums.members[i];
+                		if(strum != null && strum.exists) {
+                    		var originalY = variables.get("opponentStrum" + i + "Y");
+                    		var originalX = variables.get("opponentStrum" + i + "X");
+                    		var originalAngle = 0;
+                    
+                    		var delay = Math.cos(i * 0.8) * 0.08;
+                    
+                    		var randomOffsetX = FlxG.random.float(-25, 25) * intensity;
+                    		var randomOffsetY = FlxG.random.float(-60, -30) * intensity;
+                    		var randomAngle = FlxG.random.float(-45, 45) * intensity;
+                    
+                    		var scaleTween = FlxTween.tween(strum.scale, {x: 0.4, y: 1.5}, duration * 0.15, {
+                        		ease: FlxEase.circOut,
+                        		startDelay: delay,
+                        		onComplete: function(twn:FlxTween) {
+                            		if (strum != null && strum.exists) {
+                                		var resetTween = FlxTween.tween(strum.scale, {x: 1.3, y: 0.5}, duration * 0.2, {
+                                    		ease: FlxEase.backOut,
+                                    		onComplete: function(twn:FlxTween) {
+                                        		if (strum != null && strum.exists) {
+                                            		var finalTween = FlxTween.tween(strum.scale, {x: 0.7, y: 0.7}, duration * 0.65, {
+                                                		ease: FlxEase.elasticOut
+                                            		});
+                                            		activeTweens.push(finalTween);
+                                        		}
+                                    		}
+                                		});
+                                		activeTweens.push(resetTween);
+                            		}
+                        		}
+                    		});
+                    		activeTweens.push(scaleTween);
+                    
+                    		var posTween = FlxTween.tween(strum, {
+                        		x: originalX + randomOffsetX,
+                        		y: originalY + randomOffsetY,
+                        		angle: originalAngle - randomAngle
+                    		}, duration * 0.25, {
+                        		ease: FlxEase.circOut,
+                        		startDelay: delay,
+                        		onComplete: function(twn:FlxTween) {
+                            		if (strum != null && strum.exists) {
+                                		var resetTween = FlxTween.tween(strum, {
+                                    		x: originalX - (randomOffsetX * 0.3),
+                                    		y: originalY - (randomOffsetY * 0.2),
+                                    		angle: originalAngle + (randomAngle * 0.4) 
+                                		}, duration * 0.3, {
+                                    		ease: FlxEase.backOut,
+                                    		onComplete: function(twn:FlxTween) {
+                                        		if (strum != null && strum.exists) {
+                                            		var finalTween = FlxTween.tween(strum, {
+                                                		x: originalX,
+                                                		y: originalY,
+                                                		angle: originalAngle
+                                            		}, duration * 0.45, {
+                                                		ease: FlxEase.elasticOut
+                                            		});
+                                            		activeTweens.push(finalTween);
+                                        		}
+                                    		}
+                                		});
+                                		activeTweens.push(resetTween);
+                            		}
+                        		}
+                    		});
+                    		activeTweens.push(posTween);
+                		}
+            		}
+            
+            		new FlxTimer().start(duration * 0.8, function(tmr:FlxTimer) {
+                		if(variables.get("noteBounceActive") == true) {
+                    		startNoteBounce();
+                		}
+            		});
+        		}
+        
+        		startNoteBounce();
+    		}
+
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);
 	}

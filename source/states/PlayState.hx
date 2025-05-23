@@ -2296,7 +2296,7 @@ class PlayState extends MusicBeatState
 			case 'Play Sound':
 				if(flValue2 == null) flValue2 = 1;
 				FlxG.sound.play(Paths.sound(value1), flValue2);
-		}
+            
 
 		case 'NoteBounce': //for u solar idk
     		if(flValue1 != null && flValue1 <= 0) {
@@ -2529,6 +2529,7 @@ class PlayState extends MusicBeatState
         
         		startNoteBounce();
     		}
+        }
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);

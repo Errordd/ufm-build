@@ -2598,6 +2598,7 @@ class PlayState extends MusicBeatState
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);
+		}
 	}
 
 	function moveCameraSection(?sec:Null<Int>):Void {

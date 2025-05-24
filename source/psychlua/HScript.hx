@@ -114,6 +114,7 @@ class HScript extends SScript
 		set('FlxAnimate', FlxAnimate);
 		#end
         set('modchartMgr', PlayState.instance.modchartMgr);
+        set('modchartsEnabled', PlayState.instance.modchartsEnabled);
 
 		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic) {

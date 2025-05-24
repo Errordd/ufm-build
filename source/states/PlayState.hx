@@ -118,6 +118,7 @@ class PlayState extends MusicBeatState
 	#end
 
 	public var modchartMgr:Manager;
+    public var modchartsEnabled:Bool = false;
 
 	#if LUA_ALLOWED
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
@@ -638,8 +639,11 @@ class PlayState extends MusicBeatState
 
 		resetRPC();
 
-		modchartMgr = new Manager();
-        add(modchartMgr);
+        if (modchartsEnabled)
+        {
+		    modchartMgr = new Manager();
+            add(modchartMgr);
+        }
 
 		callOnScripts('onCreatePost');
 

@@ -9,6 +9,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
 import haxe.Json;
 
 import openfl.Assets;
@@ -46,7 +48,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
-	var checkerBG:FlxSprite;
+	var checkers:FlxBackdrop;
 	
 	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
 	var titleTextAlphas:Array<Float> = [1, .64];
@@ -190,12 +192,10 @@ class TitleState extends MusicBeatState
 		Conductor.bpm = titleJSON.bpm;
 		persistentUpdate = true;
 
-		checkerBG = new FlxSprite().loadGraphic(Paths.image('checkerboardtres'));
-		checkerBG.antialiasing = ClientPrefs.data.antialiasing;
-		checkerBG.scrollFactor.set(0.2, 0.2);
-		checkerBG.setGraphicSize(Std.int(checkerBG.width * 1.2));
-		checkerBG.updateHitbox();
-		add(checkerBG);
+
+		checkers = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0xFF836699, 0xFFceb5ee));
+		checkers.velocity.set(-45, -16);
+		add(checkers);
 
 		logoBl = new FlxSprite();
 		logoBl.frames = Paths.getSparrowAtlas('ufmlogoboing');
@@ -302,14 +302,6 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if(checkerBG != null) {
-			checkerBG.x -= 0.45 * elapsed * 60;
-			checkerBG.y -= 0.16 * elapsed * 60;
-			
-			if(checkerBG.x < -checkerBG.width) checkerBG.x += checkerBG.width;
-			if(checkerBG.y < -checkerBG.height) checkerBG.y += checkerBG.height;
-		}
-		
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 
@@ -527,12 +519,14 @@ class TitleState extends MusicBeatState
 				case 13:
 					deleteCoolText();
 				case 14:
-					addMoreText('Friday');
+					addMoreText('Friday Night Funkin\'');
 				case 15:
-					addMoreText('Night');
+					addMoreText('Untitled');
 				case 16:
-					addMoreText('Funkin');
+					addMoreText('Friend');
 				case 17:
+					addMoreText('Mod');
+				case 18:
 					skipIntro();
 			}
 		}

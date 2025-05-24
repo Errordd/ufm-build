@@ -74,7 +74,7 @@ class MainMenuState extends MusicBeatState
 		pkoverlay.alpha = 0;
 		add(pkoverlay);
 
-		FlxTween.tween(pkoverlay, {alpha: 0.8}, 0.6, {ease: FlxEase.quartInOut, startDelay: 2.4});
+		FlxTween.tween(pkoverlay, {alpha: 0.8}, 0.6, {ease: FlxEase.quartInOut, startDelay: 0.4});
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
@@ -90,7 +90,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxTween.tween(slideSprite, {x: 0, alpha: 1}, 1, {
 			ease: FlxEase.expoOut,
-			startDelay: 2,
+			startDelay: 1,
 			onComplete: function(twn:FlxTween) {
 				createMenuItems();
 				canBounce = true;
@@ -108,7 +108,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxTween.tween(leftSprite, {x: 0, alpha: 1}, 1, {
 			ease: FlxEase.expoOut,
-			startDelay: 4
+			startDelay: 2
 		});
 
 		watermark = new FlxSprite().loadGraphic(Paths.image('yea-idk-man'));

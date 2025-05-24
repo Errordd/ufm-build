@@ -643,6 +643,80 @@ class PlayState extends MusicBeatState
         {
 		    modchartMgr = new Manager();
             add(modchartMgr);
+            
+            //-----Normal Modifiers-----//
+            modchartMgr.registerModifier("beatModifier", Beat);
+            modchartMgr.addModifier("beatModifier");
+            modchartMgr.registerModifier("boostModifier", Boost);
+            modchartMgr.addModifier("boostModifier");
+            modchartMgr.registerModifier("bounceModifier", Bounce);
+            modchartMgr.addModifier("bounceModifier");
+            modchartMgr.registerModifier("bumpyModifier", Bumpy);
+            modchartMgr.addModifier("bumpyModifier");
+            modchartMgr.registerModifier("centerRotateModifier", CenterRotate);
+            modchartMgr.addModifier("centerRotateModifier");
+            modchartMgr.registerModifier("confusionModifier", Confusion);
+            modchartMgr.addModifier("confusionModifier");
+            modchartMgr.registerModifier("druggedModifier", Drugged);
+            modchartMgr.addModifier("druggedModifier");
+            modchartMgr.registerModifier("drunkModifier", Drunk);
+            modchartMgr.addModifier("drunkModifier");
+            modchartMgr.registerModifier("fieldRotateModifier", FieldRotate);
+            modchartMgr.addModifier("fieldRotateModifier");
+            modchartMgr.registerModifier("infiniteModifier", Infinite);
+            modchartMgr.addModifier("infiniteModifier");
+            modchartMgr.registerModifier("invertModifier", Invert);
+            modchartMgr.addModifier("invertModifier");
+            modchartMgr.registerModifier("opponentSwapModifier", OpponentSwap);
+            modchartMgr.addModifier("opponentSwapModifier");
+            modchartMgr.registerModifier("pathModifier", PathModifier);
+            modchartMgr.addModifier("pathModifier");
+            modchartMgr.registerModifier("radionicModifier", Radionic);
+            modchartMgr.addModifier("radionicModifier");
+            modchartMgr.registerModifier("receptorScrollModifier", ReceptorScroll);
+            modchartMgr.addModifier("receptorScrollModifier");
+            modchartMgr.registerModifier("reverseModifier", Reverse);
+            modchartMgr.addModifier("reverseModifier");
+            modchartMgr.registerModifier("rotateModifier", Rotate);
+            modchartMgr.addModifier("rotateModifier");
+            modchartMgr.registerModifier("sawToothModifier", SawTooth);
+            modchartMgr.addModifier("sawToothModifier");
+            modchartMgr.registerModifier("scaleModifier", Scale);
+            modchartMgr.addModifier("scaleModifier");
+            modchartMgr.registerModifier("skewModifier", Skew);
+            modchartMgr.addModifier("skewModifier");
+            modchartMgr.registerModifier("squareModifier", Square);
+            modchartMgr.addModifier("squareModifier");
+            modchartMgr.registerModifier("stealthModifier", Stealth);
+            modchartMgr.addModifier("stealthModifier");
+            modchartMgr.registerModifier("tipsyModifier", Tipsy);
+            modchartMgr.addModifier("tipsyModifier");
+            modchartMgr.registerModifier("tornadoModifier", Tornado);
+            modchartMgr.addModifier("tornadoModifier");
+            modchartMgr.registerModifier("transformModifier", Transform);
+            modchartMgr.addModifier("transformModifier");
+            modchartMgr.registerModifier("zigZagModifier", ZigZag);
+            modchartMgr.addModifier("zigZagModifier");
+            modchartMgr.registerModifier("zoomModifier", Zoom);
+            modchartMgr.addModifier("zoomModifier");
+
+            //-----Schmovin Modifiers-----//
+            modchartMgr.registerModifier("schmovinDrunkModifier", SchmovinDrunk);
+            modchartMgr.addModifier("schmovinDrunkModifier");
+            modchartMgr.registerModifier("schmovinTipsyModifier", SchmovinTipsy);
+            modchartMgr.addModifier("schmovinTipsyModifier");
+            modchartMgr.registerModifier("schmovinTornadoModifier", SchmovinTornado);
+            modchartMgr.addModifier("schmovinTornadoModifier");
+
+            //-----False Paradise Modifiers-----//
+            modchartMgr.registerModifier("counterClockWiseModifier", CounterClockWise);
+            modchartMgr.addModifier("counterClockWiseModifier");
+            modchartMgr.registerModifier("spiralModifier", Spiral);
+            modchartMgr.addModifier("spiralModifier");
+            modchartMgr.registerModifier("vibrateModifier", Vibrate);
+            modchartMgr.addModifier("vibrateModifier");
+            modchartMgr.registerModifier("wiggleModifier", Wiggle);
+            modchartMgr.addModifier("wiggleModifier");
         }
 
 		callOnScripts('onCreatePost');
@@ -2138,6 +2212,30 @@ class PlayState extends MusicBeatState
 		if(Math.isNaN(flValue2)) flValue2 = null;
 
 		switch(eventName) {
+            case 'Ease Modifier':
+                if (modchartsEnabled){
+                    var name:String = value1.split(',')[0];
+                    var length:Float = Std.parseFloat(value2.split(',')[1]);
+                    var value:Float = Std.parseFloat(value1.split(',')[1]);
+                    var ease:EaseFunction = Reflect.field(FlxEase, value2.split(',')[0]);
+                    var player:Int = Std.parseInt(value1.split(',')[2]);
+                    var field:Int = Std.parseInt(value2.split(',')[2]);
+                    modchartMgr.ease(name, curDecBeat+0.1, length, value, ease, player, field);
+                }
+            case 'Set Modifier':
+                if (modchartsEnabled){
+                    var name:String = value1.split(',')[0];
+                    var value:Float = Std.parseFloat(value1.split(',')[1]);
+                    var player:Int = Std.parseInt(value2.split(',')[0]);
+                    var field:Int = Std.parseInt(value2.split(',')[1]);
+                    modchartMgr.setPercent(name, value, player, field);
+                }
+            case 'Toggle Arrow Paths':
+                if (modchartsEnabled)
+                    modchartMgr.renderArrowPaths = !modchartMgr.renderArrowPaths;
+            case 'Add Playfield':
+                if (modchartsEnabled)
+                    modchartMgr.addPlayfield();
 			case 'Hey!':
 				var value:Int = 2;
 				switch(value1.toLowerCase().trim()) {

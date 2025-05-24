@@ -64,6 +64,10 @@ class ChartingState extends MusicBeatState
 	var eventStuff:Array<Dynamic> =
 	[
 		['', "Nothing. Yep, that's right."],
+        ['Ease Modifier', "Value 1: modifier to ease,target value,player(-1 default) \nValue 2: ease type(like backIn, circOut, etc.), ease length in beats,field(-1 default)"],
+        ['Set Modifier', "Value 1: modifier to set, target value \nValue 2: player, field(both defaults are -1)"],
+        ['Toggle Arrow Paths', "Toggles if the arrow paths are visible or not. No values required"],
+        ['Add Playfield', "Adds a Playfield. No values required"],
 		['Dadbattle Spotlight', "Used in Dad Battle,\nValue 1: 0/1 = ON/OFF,\n2 = Target Dad\n3 = Target BF"],
 		['Hey!', "Plays the \"Hey!\" animation from Bopeebo,\nValue 1: BF = Only Boyfriend, GF = Only Girlfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for 0.6s"],
 		['Set GF Speed', "Sets GF head bopping speed,\nValue 1: 1 = Normal speed,\n2 = 1/2 speed, 4 = 1/4 speed etc.\nUsed on Fresh during the beatbox parts.\n\nWarning: Value must be integer!"],

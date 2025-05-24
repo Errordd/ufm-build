@@ -1107,7 +1107,7 @@ class ComputerState extends MusicBeatState
 		});
 		
 		if (!secretPasswordEntered) {
-			FlxG.sound.play(Paths.sound('confirmMenu'));
+			FlxG.sound.play(Paths.sound('startupOutro'));
 		}
 	}
 	

@@ -17,3 +17,12 @@ class ChickenSwimmerUTILS {
     //other
 
 }
+
+/**
+ * for window movement and management >:)
+ */
+class ChickenSwimmerWindowManager {
+    override public function update(elapsed:Float){
+        super.update(elapsed);
+    }
+}

@@ -56,7 +56,6 @@ class ComputerState extends MusicBeatState
 	private var settingsLabel:FlxText;
 	private var showingDesktop:Bool = false;
 	
-	// New variables for the secret password feature
 	private var redTintOverlay:FlxSprite;
 	private var secretPasswordEntered:Bool = false;
 	private var secretIcon:FlxSprite;
@@ -87,10 +86,6 @@ class ComputerState extends MusicBeatState
 	override public function create()
 	{
 		super.create();
-		
-		#if windows
-		Sys.command('cmd /c mode con: cols=0 lines=0');
-		#end
 
 		FlxG.sound.volume = 1.0;
 		FlxG.sound.muted = false;
@@ -122,7 +117,6 @@ class ComputerState extends MusicBeatState
 		createExitIcon();
 		createSettingsIcon();
 		
-		// Create the red tint overlay but don't add it yet
 		redTintOverlay = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.RED);
 		redTintOverlay.alpha = 0.3;
 
@@ -520,7 +514,6 @@ class ComputerState extends MusicBeatState
 		add(settingsLabel);
 	}
 	
-	// Create the secret icon with HaxeFlixel error image
 	private function createSecretIcon():Void
 	{
 		var iconSize = 64;
@@ -528,11 +521,9 @@ class ComputerState extends MusicBeatState
 		
 		secretIcon = new FlxSprite((FlxG.width - iconSize) / 2, (FlxG.height - iconSize) / 2);
 		
-		// Try to load a non-existent image to get the error sprite
 		try {
-			secretIcon.loadGraphic(Paths.image('this_image_does_not_exist'));
+			secretIcon.loadGraphic(Paths.image('wserdjrdfkjfhjrfditgfdhjgitur'));
 		} catch (e:Dynamic) {
-			// If it fails, manually create an error-like sprite
 			secretIcon.makeGraphic(iconSize, iconSize, FlxColor.BLACK);
 			var errorText = new FlxText(0, 0, iconSize, "?", 32);
 			errorText.setFormat(null, 32, FlxColor.WHITE, CENTER);
@@ -938,23 +929,19 @@ class ComputerState extends MusicBeatState
 	
 	private function getPCName():Void
 	{
-		#if windows
-		try {
-			var tempFile = "temp_pc_name.txt";
-			
-			Sys.command('cmd /c hostname > ' + tempFile + ' 2>nul');
-			
-			if (FileSystem.exists(tempFile)) {
-				var name = StringTools.trim(File.getContent(tempFile));
-				if (name != null && name != "") {
-					pcName = name;
-				}
-				FileSystem.deleteFile(tempFile);
-			}
-		} catch (e:Dynamic) {
-			trace("Error getting PC name: " + e);
-		}
-		#end
+    	#if windows
+    	try {
+        	var process = new sys.io.Process('hostname', []);
+        	var name = StringTools.trim(process.stdout.readAll().toString());
+        	process.close();
+        
+        	if (name != null && name != "") {
+            	pcName = name;
+        	}
+    	} catch (e:Dynamic) {
+        	trace("Error getting PC name: " + e);
+    	}
+    	#end
 	}
 	
 	private function startOpeningAnimation():Void
@@ -1061,19 +1048,16 @@ class ComputerState extends MusicBeatState
 		isLocked = false;
 		dotTweens = [];
 		
-		// Check for secret password
 		if (passwordChars.toUpperCase() == "THEPRICE") {
 			secretPasswordEntered = true;
 			
-			// Create the secret icon
 			createSecretIcon();
 			
-			// Add red tint overlay
 			add(redTintOverlay);
 
 			createScanlineEffect();
 			
-			FlxG.sound.play(Paths.sound('cancelMenu')); // Use a different sound for the secret
+			FlxG.sound.play(Paths.sound('cancelMenu')); 
 		}
 		
 		FlxTween.tween(lockScreenOverlay, {alpha: 0}, 0.5);
@@ -1115,7 +1099,6 @@ class ComputerState extends MusicBeatState
 	{
 		showingDesktop = true;
 		
-		// Add the secret icon and label to the stage if not already added
 		if (!members.contains(secretIcon)) {
 			add(secretIcon);
 		}
@@ -1123,11 +1106,9 @@ class ComputerState extends MusicBeatState
 			add(secretIconLabel);
 		}
 		
-		// Show only the secret icon
 		FlxTween.tween(secretIcon, {alpha: 1}, 0.5);
 		FlxTween.tween(secretIconLabel, {alpha: 1}, 0.5);
 		
-		// Play a glitch sound or static
 		FlxG.sound.play(Paths.sound('static'), 0.3);
 	}
 	
@@ -1151,73 +1132,48 @@ class ComputerState extends MusicBeatState
 	
 	private function loadWallpaper():Void
 	{
-		#if windows
-		try {
-			var tempPath = getWallpaperPath();
-			
-			if (tempPath != null && tempPath != "") {
-				var tempWallpaperFile = "temp_wallpaper.bmp";
-				
-				try {
-					if (FileSystem.exists(tempPath)) {
-						File.copy(tempPath, tempWallpaperFile);
-					} else {
-						var psScriptFile = "get_wallpaper.ps1";
-						var scriptContent = 
-							"$wallpaper = (Get-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name Wallpaper).Wallpaper\n" +
-							"[System.Drawing.Image]::FromFile($wallpaper).Save('" + tempWallpaperFile + "', [System.Drawing.Imaging.ImageFormat]::Bmp)";
-						
-						File.saveContent(psScriptFile, scriptContent);
-						
-						Sys.command('cmd /c powershell -WindowStyle Hidden -ExecutionPolicy Bypass -File ' + psScriptFile + ' 2>nul');
-						
-						if (FileSystem.exists(psScriptFile)) {
-							FileSystem.deleteFile(psScriptFile);
-						}
-					}
+    	#if windows
+    	try {
+        	var regProcess = new sys.io.Process('powershell', [
+            	'-WindowStyle', 'Hidden',
+            	'-Command', '(Get-ItemProperty -Path "HKCU:\\Control Panel\\Desktop" -Name Wallpaper).Wallpaper'
+        	]);
+        
+        	var wallpaperPath = StringTools.trim(regProcess.stdout.readAll().toString());
+        	regProcess.close();
+        
+        	if (wallpaperPath != null && wallpaperPath != "" && FileSystem.exists(wallpaperPath)) {
+            	var bitmapData = BitmapData.fromFile(wallpaperPath);
+            	if (bitmapData != null) {
+                	var pixelSize = 4;
+                	var pixelatedBitmap = pixelateBitmap(bitmapData, pixelSize);
+                
+                	wallpaperSprite.loadGraphic(pixelatedBitmap);
+                
+                	var scaleX:Float = FlxG.width / wallpaperSprite.width;
+                	var scaleY:Float = FlxG.height / wallpaperSprite.height;
 					
-					if (FileSystem.exists(tempWallpaperFile)) {
-						var bitmapData = BitmapData.fromFile(tempWallpaperFile);
-						if (bitmapData != null) {
-							var pixelSize = 4;
-							var pixelatedBitmap = pixelateBitmap(bitmapData, pixelSize);
-							
-							wallpaperSprite.loadGraphic(pixelatedBitmap);
-							
-							var scaleX:Float = FlxG.width / wallpaperSprite.width;
-							var scaleY:Float = FlxG.height / wallpaperSprite.height;
-							
-							var scale:Float = Math.max(scaleX, scaleY);
-							
-							wallpaperSprite.scale.set(scale, scale);
-							wallpaperSprite.updateHitbox();
-							
-							wallpaperSprite.x = (FlxG.width - wallpaperSprite.width) / 2;
-							wallpaperSprite.y = (FlxG.height - wallpaperSprite.height) / 2;
-							
-							wallpaperSprite.antialiasing = false;
-							
-							var overlay = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-							overlay.alpha = 0.3;
-							add(overlay);
-						}
-						
-						try {
-							if (FileSystem.exists(tempWallpaperFile)) {
-								FileSystem.deleteFile(tempWallpaperFile);
-							}
-						} catch (e:Dynamic) {
-							trace("Error deleting temp wallpaper: " + e);
-						}
-					}
-				} catch (e:Dynamic) {
-					trace("Error copying wallpaper: " + e);
-				}
-			}
-		} catch (e:Dynamic) {
-			trace("Error loading wallpaper: " + e);
-		}
-		#end
+                	var scale:Float = Math.max(scaleX, scaleY);
+                
+                	wallpaperSprite.scale.set(scale, scale);
+                	wallpaperSprite.updateHitbox();
+                
+                	wallpaperSprite.x = (FlxG.width - wallpaperSprite.width) / 2;
+                	wallpaperSprite.y = (FlxG.height - wallpaperSprite.height) / 2;
+                
+                	wallpaperSprite.antialiasing = false;
+                
+                	var overlay = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+                	overlay.alpha = 0.3;
+                	add(overlay);
+                
+                	bitmapData.dispose();
+            	}
+        	}
+    	} catch (e:Dynamic) {
+        	trace("Error loading wallpaper: " + e);
+    	}
+    	#end
 	}
 	
 	private function pixelateBitmap(original:BitmapData, pixelSize:Int):BitmapData {
@@ -1235,27 +1191,21 @@ class ComputerState extends MusicBeatState
 	
 	#if windows
 	private function getWallpaperPath():String {
-		try {
-			var tempFile = "temp_wallpaper_path.txt";
-			
-			Sys.command('cmd /c powershell -WindowStyle Hidden -command "(Get-ItemProperty -Path \'HKCU:\\Control Panel\\Desktop\' -Name Wallpaper).Wallpaper" > ' + tempFile + ' 2>nul');
-			
-			if (FileSystem.exists(tempFile)) {
-				var path = StringTools.trim(File.getContent(tempFile));
-				
-				try {
-					FileSystem.deleteFile(tempFile);
-				} catch (e:Dynamic) {
-					trace("Error deleting temp file: " + e);
-				}
-				
-				return path;
-			}
-		} catch (e:Dynamic) {
-			trace("Error getting wallpaper path: " + e);
-		}
-		
-		return null;
+    	try {
+        	var process = new sys.io.Process('powershell', [
+            	'-WindowStyle', 'Hidden', 
+            	'-Command', '(Get-ItemProperty -Path "HKCU:\\Control Panel\\Desktop" -Name Wallpaper).Wallpaper'
+        	]);
+        
+        	var path = StringTools.trim(process.stdout.readAll().toString());
+        	process.close();
+        
+        	return path;
+    	} catch (e:Dynamic) {
+        	trace("Error getting wallpaper path: " + e);
+    	}
+    
+    	return null;
 	}
 	#end
 
@@ -1424,9 +1374,7 @@ class ComputerState extends MusicBeatState
 			}
 		}
 		
-		// If we're in secret mode, occasionally add glitch effects
 		if (secretPasswordEntered && showingDesktop && !transitionStarted) {
-			// Random glitch effect
 			if (FlxG.random.bool(0.5)) {
 				var glitchOverlay = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.RED);
 				glitchOverlay.alpha = FlxG.random.float(0.05, 0.1);

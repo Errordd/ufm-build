@@ -643,7 +643,7 @@ class PlayState extends MusicBeatState
         {
 		    modchartMgr = new Manager();
             add(modchartMgr);
-            
+
             //-----Normal Modifiers-----//
             modchartMgr.registerModifier("beatModifier", Beat);
             modchartMgr.addModifier("beatModifier");
@@ -653,24 +653,18 @@ class PlayState extends MusicBeatState
             modchartMgr.addModifier("bounceModifier");
             modchartMgr.registerModifier("bumpyModifier", Bumpy);
             modchartMgr.addModifier("bumpyModifier");
-            modchartMgr.registerModifier("centerRotateModifier", CenterRotate);
-            modchartMgr.addModifier("centerRotateModifier");
             modchartMgr.registerModifier("confusionModifier", Confusion);
             modchartMgr.addModifier("confusionModifier");
             modchartMgr.registerModifier("druggedModifier", Drugged);
             modchartMgr.addModifier("druggedModifier");
             modchartMgr.registerModifier("drunkModifier", Drunk);
             modchartMgr.addModifier("drunkModifier");
-            modchartMgr.registerModifier("fieldRotateModifier", FieldRotate);
-            modchartMgr.addModifier("fieldRotateModifier");
             modchartMgr.registerModifier("infiniteModifier", Infinite);
             modchartMgr.addModifier("infiniteModifier");
             modchartMgr.registerModifier("invertModifier", Invert);
             modchartMgr.addModifier("invertModifier");
             modchartMgr.registerModifier("opponentSwapModifier", OpponentSwap);
             modchartMgr.addModifier("opponentSwapModifier");
-            modchartMgr.registerModifier("pathModifier", PathModifier);
-            modchartMgr.addModifier("pathModifier");
             modchartMgr.registerModifier("radionicModifier", Radionic);
             modchartMgr.addModifier("radionicModifier");
             modchartMgr.registerModifier("receptorScrollModifier", ReceptorScroll);

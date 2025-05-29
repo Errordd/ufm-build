@@ -1,0 +1,21 @@
+{
+	"songs": [
+		["Determined", "CS", [165, 0, 77]],
+		["System Access", "CS", [165, 0, 77]]
+	],
+
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"weekBackground": "",
+
+	"storyName": "",
+	"weekBefore": "tutorial",
+	"weekName": "Chicken",
+	"startUnlocked": true,
+
+	"hideStoryMode": true,
+	"hideFreeplay": false
+}

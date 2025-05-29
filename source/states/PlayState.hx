@@ -70,6 +70,11 @@ import psychlua.HScript;
 import tea.SScript;
 #end
 
+
+
+import backend.Features;
+
+
 /**
  * This is where all the Gameplay stuff happens and is managed
  *
@@ -286,6 +291,9 @@ class PlayState extends MusicBeatState
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
 
+	//FEATURES
+	public var Feat:backend.Features;
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -411,6 +419,7 @@ class PlayState extends MusicBeatState
 			case 'school': new states.stages.School(); //Week 6 - Senpai, Roses
 			case 'schoolEvil': new states.stages.SchoolEvil(); //Week 6 - Thorns
 			case 'tank': new states.stages.Tank(); //Week 7 - Ugh, Guns, Stress
+			case 'CS': new backend.ChickenSwimmer.ChickenStage(); //hehe, screw the softcoded stages! --ChickenSwimmer2020
 		}
 
 		if(isPixelStage) {
@@ -722,6 +731,14 @@ class PlayState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		if(eventNotes.length < 1) checkEventNote();
+
+		//i would have done this earlier,
+		//but i need to make sure playstate is fully initalized for the features to work,
+		//might cause problems later but eh,
+		//ill fix em as they come. --ChickenSwimmer2020
+
+		//FEATURES ENABLING.
+		Feat = new Features(this); //auto-enable the features, :thumbs_up:
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -1857,6 +1874,13 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		//features n stuff.
+		Feat.cmb.upd(elapsed); //force update since i didnt make the class natively able to do it, why? idfk.
+
+
+
+
+
 		if(!inCutscene && !paused && !freezeCamera) {
 			FlxG.camera.followLerp = 2.4 * cameraSpeed * playbackRate;
 			if(!startingSong && !endingSong && boyfriend.getAnimationName().startsWith('idle')) {
@@ -3404,6 +3428,9 @@ class PlayState extends MusicBeatState
 
 	public function goodNoteHit(note:Note):Void
 	{
+		if(Feat != null){
+			Feat.cmb.HIT(Feat.cmb.info); //call the hit function since it cant be done automatically.
+		}
 		if(note.wasGoodHit) return;
 		if(cpuControlled && note.ignoreNote) return;
 

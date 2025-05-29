@@ -1,0 +1,9 @@
+{
+	"directory": "Chicken",
+	"defaultZoom": 0.9,
+	"stageUI": "", //overridden by my stage file! sorry guys, i wanna go all out!
+
+	"boyfriend": [810, 100],
+	"girlfriend": [200, 65],
+	"opponent": [20, 100]
+}

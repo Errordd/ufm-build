@@ -24,8 +24,6 @@ class ChickenSwimmerWindowManager { //TODO: window transparency somehow.
     public function init(){
         trace('ChickenSwimmer2020 window manager initalized');
     }
-    public function update(elapsed:Float){
-    }
 }
 
 class ChickenStage extends BaseStage { //* how do stages even work? is it like, it compares a json name to a hardcoded stage or smthn?
@@ -38,14 +36,28 @@ class ChickenStage extends BaseStage { //* how do stages even work? is it like, 
 
     override public function create() {
         //hehe, this is where stuff gets real! (literally XDDDDDD)
-        WINMANG.init();
+        
 
-        Bar = new BGSprite('bar', 0, 0, 1.2, 1.2, null, false);
+        Bar = new BGSprite('Chicken/bar', -40, -250, 1.2, 1.2, null, false);
         add(Bar);
+
+        //TODO: move girlfriend to behind the back wall, remove and re-add?
+
+        backWall = new BGSprite('Chicken/back', -40, -250, 1, 1, null, false);
+        add(backWall);
+
+        StageFloor = new FlxSprite(0, 0);
+        StageFloor.frames = Paths.getSparrowAtlas('Chicken/floor');
+        StageFloor.animation.addByPrefix('bop', 'floor bop', 24, false, false, false);
+        add(StageFloor);
+        StageFloor.animation.play('bop');
+    }
+
+    override public function beatHit(){
+        StageFloor.animation.play('bop', true);
     }
 
     override public function update(elapsed:Float){
         super.update(elapsed);
-        WINMANG.update(elapsed); //since we cant run update in the actual class
     }
 }

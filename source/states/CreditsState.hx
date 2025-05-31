@@ -40,6 +40,23 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			//the BEST credits.
+			['Untitled Friend Mod Team'],
+			['The Main Trio'],
+			['PKMAKESSTUFF', 'pk', 'Musician, Artist, Charter, Coder, VA Of Pk', 'https://www.youtube.com/channel/UC4GSNYp7YXWQXFQYQ-LwAvw', '86669D'],
+			['GABE:D', 'gabe', 'Artist, VA Of Gabe', 'https://youtube.com/@Gabeescauseyes?si=qt9y6Jv1ik_DxkEn', '33B8A9'],
+			['SIMPLY A CUBE', 'cube', 'Artist, VA Of Cube', 'https://www.youtube.com/channel/UCnPBvmprgOBfkVtV-l3sN2A', '1152B4'],
+			['ChickenSwimmer2020'],
+			['ChickenSwimmer2020', 'CS', 'Programmer, Charter, Animator\nI did most of the feature hardcoding!', 'https://www.youtube.com/@ChickenSwimmer2020', '00FF00'],
+			['MUSICIANS'],
+			['SIXTY', 'sixty', 'Musician', 'https://youtube.com/@SixtyQT?si=vGe7Necg13yypTTp', 'FFFFFF'],
+			['MYKAH', 'mykah', 'Musician', 'https://twitter.com/MykahBaby1', '43ED43'],
+			['SHXDOW', 'shxdow', 'Musician', 'https://youtube.com/@luhshxdow?si=ubsL3SKnFAOWrD8g', '56439C'],
+			['CHARTERS'],
+			['LUIGI/LIDI', 'lidi', 'Charter', 'https://soundcloud.com/number-one-71791951', '1CD05A'],
+			['ARTISTS'],
+			['SAUL', 'saul', 'The Main Artist', 'https://twitter.com/pantanomello', '739EB4'],
+			//old credits
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer and Head of Psych Engine',					 'https://ko-fi.com/shadowmario',		'444444'],
 			['Riveren',				'riveren',			'Main Artist/Animator of Psych Engine',						 'https://twitter.com/riverennn',		'14967B'],

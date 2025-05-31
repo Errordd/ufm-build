@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="floor.png">
+<SubTexture name="floor bop0000" x="0" y="0" width="1984" height="380" frameX="0" frameY="-559" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0001" x="0" y="1457" width="1984" height="352" frameX="0" frameY="-587" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0002" x="1984" y="0" width="1984" height="337" frameX="0" frameY="-602" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0003" x="1984" y="337" width="1984" height="333" frameX="0" frameY="-606" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0004" x="1984" y="670" width="1984" height="323" frameX="0" frameY="-616" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0005" x="1984" y="993" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0006" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0007" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0008" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0009" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0010" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0011" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0012" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0013" x="0" y="380" width="1984" height="361" frameX="0" frameY="-578" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0014" x="0" y="1100" width="1984" height="357" frameX="0" frameY="-582" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0015" x="0" y="741" width="1984" height="359" frameX="0" frameY="-580" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0016" x="0" y="1809" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0017" x="1984" y="1809" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0018" x="0" y="2128" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0019" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0020" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0021" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0022" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0023" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0024" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0025" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0026" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0027" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+<SubTexture name="floor bop0028" x="1984" y="1312" width="1984" height="319" frameX="0" frameY="-620" frameWidth="1984" frameHeight="939" />
+</TextureAtlas>

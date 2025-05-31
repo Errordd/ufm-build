@@ -274,6 +274,7 @@ class TVState extends MusicBeatState
         
         blackOverlay = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
         blackOverlay.alpha = 0;
+        blackOverlay.scrollFactor.set(); //makes it so hopefully the camera movement based on cursor position shouldnt make the corners of the stage visible, keyword, *shouldnt*
         add(blackOverlay);
         
         typingComplete = true;

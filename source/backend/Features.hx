@@ -1,5 +1,7 @@
 package backend;
 
+import flixel.tweens.FlxEase;
+
 /**
  * this class contains all the features of the mod that were previously coded in lua
  * now converted to be hardcoded directly into the engine.
@@ -12,6 +14,7 @@ class Features{
     }
 }
 
+//----------------------------------------------- SCRIPTS FOLDER -----------------------------------------------\\
 /**
  * anglecamera.lua
  */
@@ -101,10 +104,6 @@ class ComboThing {
             else
                 Txt[6].text = 'Misses: FC';
 
-
-            //idk what these do but ok.
-
-
             if(info.misses > 0){
                 Txt[6].color = FlxColor.fromString('#ff0000');
             }
@@ -121,5 +120,11 @@ class ComboThing {
         ComboTargetScale = 1.03;
         if(maxCombo == inf.combo)
             MaxComboTargetScale = 1.03;
+        backend.ChickenSwimmer.ChickenSwimmerUTILS.wait(0.07, ()->{
+            ComboTargetScale = 1;
+            MaxComboTargetScale = 1;
+        });
     }
 }
+
+//--------------------------------------------------- Extras ---------------------------------------------------\\

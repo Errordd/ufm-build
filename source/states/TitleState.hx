@@ -54,6 +54,8 @@ class TitleState extends MusicBeatState
 	var titleTextAlphas:Array<Float> = [1, .64];
 
 	var curWacky:Array<String> = [];
+	var curCred:Array<String> = [];
+	var curCred2:Array<String> = [];
 
 	var wackyImage:FlxSprite;
 
@@ -85,6 +87,8 @@ class TitleState extends MusicBeatState
 		FlxG.keys.preventDefaultKeys = [TAB];
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
+		curCred = FlxG.random.getObject(getIntroCreditsShtuff());
+		curCred2 = FlxG.random.getObject(getIntroCreditsShtuff());
 
 		super.create();
 
@@ -252,7 +256,8 @@ class TitleState extends MusicBeatState
 		add(credGroup);
 		textGroup = new FlxGroup();
 
-		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		blackScreen = new FlxSprite().makeGraphic(FlxG.width + 5, FlxG.height + 5, FlxColor.BLACK);
+		blackScreen.scrollFactor.set(0, 0); //just in-case
 		credGroup.add(blackScreen);
 
 		credTextShit = new Alphabet(0, 0, "", true);
@@ -289,6 +294,20 @@ class TitleState extends MusicBeatState
 		for (i in firstArray)
 		{
 			swagGoodArray.push(i.split('--'));
+		}
+
+		return swagGoodArray;
+	}
+
+	function getIntroCreditsShtuff():Array<Array<String>>
+	{
+		var fullText:String = Assets.getText(Paths.txt('introCredits'));
+		var firstArray:Array<String> = fullText.split('\n');
+		var swagGoodArray:Array<Array<String>> = [];
+
+		for (i in firstArray)
+		{
+			swagGoodArray.push(i.split('||'));
 		}
 
 		return swagGoodArray;
@@ -348,6 +367,16 @@ class TitleState extends MusicBeatState
 				titleText.color = FlxColor.interpolate(titleTextColors[0], titleTextColors[1], timer);
 				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
 			}
+
+			#if debug //so we can debug the start text.
+			if(FlxG.keys.anyJustPressed([NINE])){
+				FlxG.resetState();
+				sickBeats = 0;
+				skippedIntro = false;
+				add(ngSpr); //should just auto re-add these correctly.
+				add(credGroup); //should just auto re-add these correctly.
+			}
+			#end
 			
 			if(pressedEnter)
 			{
@@ -483,8 +512,7 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-					FlxG.sound.music.fadeIn(4, 0, 0.7);
+					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
 					createCoolText(['Psych Engine by'], 40);
@@ -519,14 +547,40 @@ class TitleState extends MusicBeatState
 				case 13:
 					deleteCoolText();
 				case 14:
-					addMoreText('Friday Night Funkin\'');
-				case 15:
-					addMoreText('Untitled');
+					createCoolText(['this is where']);
 				case 16:
-					addMoreText('Friend');
+					addMoreText('it gets good!');
 				case 17:
-					addMoreText('Mod');
+					deleteCoolText();
 				case 18:
+					createCoolText(['Main Trio'], -40);
+				case 20:
+					addMoreText('PKMAKESSTUFF', 40);
+					addMoreText('GABE:D', 40);
+					addMoreText('SIMPLY A CUBE', 40);
+				case 21:
+					deleteCoolText();
+				case 22:
+					createCoolText([curCred[0]], -40);
+				case 24:
+					addMoreText(curCred[1]);
+				case 25:
+					deleteCoolText();
+				case 26:
+					createCoolText([curCred2[0]], -40);
+				case 28:
+					addMoreText(curCred2[1]);
+				case 29:
+					deleteCoolText();
+				case 30:
+					addMoreText('Friday Night Funkin\'');
+				case 31:
+					addMoreText('Untitled');
+				case 32:
+					addMoreText('Friend');
+				case 33:
+					addMoreText('Mod');
+				case 34:
 					skipIntro();
 			}
 		}

@@ -192,6 +192,9 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+
+		Conductor.songPosition = FlxG.sound.music.time; //for anything bpm to work, you have to do this stuff.
+
 		if (FlxG.sound.music.volume < 0.8) {
 			FlxG.sound.music.volume += 0.5 * elapsed;
 			if (FreeplayState.vocals != null)
@@ -271,40 +274,57 @@ class MainMenuState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+
+		//okay the way that you guys were doing the bops for items literally didnt work, so imma fix that for you with lerps n stuff.
+		if(leftSprite != null){
+			leftSprite.scale.x = FlxMath.lerp(1, leftSprite.scale.x, Math.exp(-elapsed * 3.125 * 1 * 1));
+			leftSprite.scale.y = FlxMath.lerp(1, leftSprite.scale.y, Math.exp(-elapsed * 3.125 * 1 * 1));
+		}
+		if(bg != null){
+			bg.scale.x = FlxMath.lerp(1, bg.scale.x, Math.exp(-elapsed * 3.125 * 1 * 1));
+			bg.scale.y = FlxMath.lerp(1, bg.scale.y, Math.exp(-elapsed * 3.125 * 1 * 1));
+		}
+		if (menuItems != null && menuItems.members[curSelected] != null) {
+			var selectedItem = menuItems.members[curSelected];
+			selectedItem.scale.x = FlxMath.lerp(1.1, selectedItem.scale.x, Math.exp(-elapsed * 3.125 * 1 * 1));
+			selectedItem.scale.y = FlxMath.lerp(1.1, selectedItem.scale.y, Math.exp(-elapsed * 3.125 * 1 * 1));
+		}
+		if (watermark != null) {
+			watermark.scale.x = FlxMath.lerp(1, watermark.scale.x, Math.exp(-elapsed * 3.125 * 1 * 1));
+			watermark.scale.y = FlxMath.lerp(1, watermark.scale.y, Math.exp(-elapsed * 3.125 * 1 * 1));
+		}
+		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, Math.exp(-elapsed * 3.125 * 1 * 1));
 	}
 	
 	override function beatHit()
 	{
 		super.beatHit();
 		
-		if (!canBounce) return;
+		//if (!canBounce) return; //so, you cant do this because it wont run entirely, i think. using an if-statement would be better
 		
 		if (lastBeatHit >= curBeat) return;
 		lastBeatHit = curBeat;
 		
-		if (leftSprite != null) {
-			leftSprite.scale.set(1 + bpmBounceScale, 1 + bpmBounceScale);
-			FlxTween.tween(leftSprite.scale, {x: 1, y: 1}, 0.2, {ease: FlxEase.quadOut});
+		if(canBounce){
+			if (leftSprite != null) {
+				leftSprite.scale.set(leftSprite.scale.x + bpmBounceScale, leftSprite.scale.y + bpmBounceScale);
+			}
+			
+			if (bg != null) {
+				bg.scale.set(bg.scale.x + (bpmBounceScale * 0.5), bg.scale.y + (bpmBounceScale * 0.5));
+			}
+			
+			if (menuItems != null && menuItems.members[curSelected] != null) {
+				var selectedItem = menuItems.members[curSelected];
+				selectedItem.scale.set(selectedItem.scale.x + (bpmBounceScale * 2), selectedItem.scale.y + (bpmBounceScale * 2));
+			}
+			
+			if (watermark != null) {
+				watermark.scale.set(watermark.scale.x + (bpmBounceScale * 0.3), watermark.scale.y + (bpmBounceScale * 0.3));
+			}
+			
+			FlxG.camera.zoom += 0.015;
 		}
-		
-		if (bg != null) {
-			bg.scale.set(1 + (bpmBounceScale * 0.5), 1 + (bpmBounceScale * 0.5));
-			FlxTween.tween(bg.scale, {x: 1.175, y: 1.175}, 0.2, {ease: FlxEase.quadOut});
-		}
-		
-		if (menuItems != null && menuItems.members[curSelected] != null) {
-			var selectedItem = menuItems.members[curSelected];
-			selectedItem.scale.set(1.1 + (bpmBounceScale * 2), 1.1 + (bpmBounceScale * 2));
-			FlxTween.tween(selectedItem.scale, {x: 1.1, y: 1.1}, 0.2, {ease: FlxEase.quadOut});
-		}
-		
-		if (watermark != null) {
-			watermark.scale.set(1 + (bpmBounceScale * 0.3), 1 + (bpmBounceScale * 0.3));
-			FlxTween.tween(watermark.scale, {x: 1, y: 1}, 0.2, {ease: FlxEase.quadOut});
-		}
-		
-		FlxG.camera.zoom = 1.015;
-		FlxTween.tween(FlxG.camera, {zoom: 1}, 0.3, {ease: FlxEase.quadOut});
 	}
 
 	function changeItem(huh:Int = 0)

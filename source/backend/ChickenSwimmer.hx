@@ -36,6 +36,8 @@ class ChickenStage extends BaseStage { //* how do stages even work? is it like, 
 
     override public function create() {
         //hehe, this is where stuff gets real! (literally XDDDDDD)
+
+        game.defaultCamZoom = 0.5;
         
 
         Bar = new BGSprite('Chicken/bar', -40, -250, 1.2, 1.2, null, false);
@@ -51,10 +53,20 @@ class ChickenStage extends BaseStage { //* how do stages even work? is it like, 
         StageFloor.animation.addByPrefix('bop', 'floor bop', 24, false, false, false);
         add(StageFloor);
         StageFloor.animation.play('bop');
+
+        TurnTable = new FlxSprite(0, 0);
+        TurnTable.frames = Paths.getSparrowAtlas('Chicken/turntable');
+        TurnTable.animation.addByPrefix('idle', 'turntable idle', 24, true, false, false);
+        add(TurnTable);
+        TurnTable.scale.set(0.4, 0.4);
+        TurnTable.updateHitbox();
+        TurnTable.animation.play('idle');
+        TurnTable.scrollFactor.set(0.5, 0.5);
     }
 
     override public function beatHit(){
         StageFloor.animation.play('bop', true);
+        TurnTable.animation.play('idle', true);
     }
 
     override public function update(elapsed:Float){

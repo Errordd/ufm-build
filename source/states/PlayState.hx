@@ -1152,72 +1152,6 @@ class PlayState extends MusicBeatState
     	spr.antialiasing = antialias;
     	insert(members.indexOf(noteGroup), spr);
     
-    	var isGoSprite:Bool = (image.endsWith("go") || image.endsWith("date-pixel"));
-    
-    	if (isGoSprite) {
-        	for (i in 0...playerStrums.length) {
-            	var originalY = playerStrums.members[i].y;
-            	var originalScaleX = playerStrums.members[i].scale.x;
-            	var originalScaleY = playerStrums.members[i].scale.y;
-            
-            	playerStrums.members[i].angle = 0;
-            
-            	FlxTween.tween(playerStrums.members[i].scale, {x: 0.8, y: 0.8}, Conductor.crochet / 1200, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(playerStrums.members[i].scale, {x: originalScaleX, y: originalScaleY}, Conductor.crochet / 1200, {
-                        	ease: FlxEase.quadIn
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(playerStrums.members[i], {y: originalY - 15}, Conductor.crochet / 1000, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(playerStrums.members[i], {y: originalY}, Conductor.crochet / 800, {
-                        	ease: FlxEase.bounceOut
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(playerStrums.members[i], {angle: 360}, Conductor.crochet / 500, {
-                	ease: FlxEase.quintOut,
-                	startDelay: i * 0.05
-            	});
-        	}
-        
-        	for (i in 0...opponentStrums.length) {
-            	var originalY = opponentStrums.members[i].y;
-            	var originalScaleX = opponentStrums.members[i].scale.x;
-            	var originalScaleY = opponentStrums.members[i].scale.y;
-            
-            	opponentStrums.members[i].angle = 0;
-            
-            	FlxTween.tween(opponentStrums.members[i].scale, {x: 0.8, y: 0.8}, Conductor.crochet / 1200, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(opponentStrums.members[i].scale, {x: originalScaleX, y: originalScaleY}, Conductor.crochet / 1200, {
-                        	ease: FlxEase.quadIn
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(opponentStrums.members[i], {y: originalY - 15}, Conductor.crochet / 1000, {
-                	ease: FlxEase.quadOut,
-                	onComplete: function(twn:FlxTween) {
-                    	FlxTween.tween(opponentStrums.members[i], {y: originalY}, Conductor.crochet / 800, {
-                        	ease: FlxEase.bounceOut
-                    	});
-                	}
-            	});
-            
-            	FlxTween.tween(opponentStrums.members[i], {angle: -360}, Conductor.crochet / 500, {
-                	ease: FlxEase.quintOut,
-                	startDelay: i * 0.05
-            	});
-        	}
-    	}
-    
     	FlxTween.tween(spr, {alpha: 0}, Conductor.crochet / 1000, {
         	ease: FlxEase.cubeOut,
         	onComplete: function(twn:FlxTween)
@@ -1675,6 +1609,7 @@ class PlayState extends MusicBeatState
 	public var skipArrowStartTween:Bool = false; //for lua
 	private function generateStaticArrows(player:Int):Void
 	{
+		var correctY:Float = 0;
 		var strumLineX:Float = ClientPrefs.data.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X;
 		var strumLineY:Float = ClientPrefs.data.downScroll ? (FlxG.height - 150) : 50;
 		for (i in 0...4)
@@ -1691,9 +1626,10 @@ class PlayState extends MusicBeatState
 			babyArrow.downScroll = ClientPrefs.data.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
-				//babyArrow.y -= 10;
+				correctY = babyArrow.y;
+				babyArrow.y = 720;
 				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
+				FlxTween.tween(babyArrow, {y: correctY, alpha: targetAlpha}, 0.4, {ease: FlxEase.circIn, startDelay: 0.5});
 			}
 			else
 				babyArrow.alpha = targetAlpha;
@@ -1715,6 +1651,69 @@ class PlayState extends MusicBeatState
 			strumLineNotes.add(babyArrow);
 			babyArrow.postAddedToGroup();
 		}
+		for (i in 0...playerStrums.length) {
+        	var originalScaleX = playerStrums.members[i].scale.x;
+        	var originalScaleY = playerStrums.members[i].scale.y;
+        
+        	playerStrums.members[i].angle = 0;
+        
+        	FlxTween.tween(playerStrums.members[i].scale, {x: 0.8, y: 0.8}, Conductor.crochet / 1200, {
+				startDelay: 0.9,
+            	ease: FlxEase.quadOut,
+            	onComplete: function(twn:FlxTween) {
+                	FlxTween.tween(playerStrums.members[i].scale, {x: originalScaleX, y: originalScaleY}, Conductor.crochet / 1200, {
+                    	ease: FlxEase.quadIn
+                	});
+            	}
+        	});
+        
+        	FlxTween.tween(playerStrums.members[i], {y: correctY - 15}, Conductor.crochet / 1000, {
+				startDelay: 0.9,
+            	ease: FlxEase.quadOut,
+            	onComplete: function(twn:FlxTween) {
+                	FlxTween.tween(playerStrums.members[i], {y: correctY}, Conductor.crochet / 800, {
+                    	ease: FlxEase.bounceOut
+                	});
+            	}
+        	});
+        
+        	FlxTween.tween(playerStrums.members[i], {angle: 360}, Conductor.crochet / 500, {
+            	ease: FlxEase.quintOut,
+            	startDelay: i * 0.05 + 0.9
+        	});
+		}
+
+    	for (i in 0...opponentStrums.length) {
+        	var originalScaleX = opponentStrums.members[i].scale.x;
+        	var originalScaleY = opponentStrums.members[i].scale.y;
+        
+        	opponentStrums.members[i].angle = 0;
+        
+        	FlxTween.tween(opponentStrums.members[i].scale, {x: 0.8, y: 0.8}, Conductor.crochet / 1200, {
+				startDelay: 0.9,
+            	ease: FlxEase.quadOut,
+            	onComplete: function(twn:FlxTween) {
+                	FlxTween.tween(opponentStrums.members[i].scale, {x: originalScaleX, y: originalScaleY}, Conductor.crochet / 1200, {
+                    	ease: FlxEase.quadIn
+                	});
+            	}
+        	});
+        
+        	FlxTween.tween(opponentStrums.members[i], {y: correctY - 15}, Conductor.crochet / 1000, {
+				startDelay: 0.9,
+            	ease: FlxEase.quadOut,
+            	onComplete: function(twn:FlxTween) {
+                	FlxTween.tween(opponentStrums.members[i], {y: correctY}, Conductor.crochet / 800, {
+                    	ease: FlxEase.bounceOut
+                	});
+            	}
+        	});
+        
+        	FlxTween.tween(opponentStrums.members[i], {angle: -360}, Conductor.crochet / 500, {
+            	ease: FlxEase.quintOut,
+            	startDelay: i * 0.05 + 0.9
+        	});
+    	}
 	}
 
 	override function openSubState(SubState:FlxSubState)

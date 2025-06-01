@@ -1041,6 +1041,8 @@ class ComputerState extends MusicBeatState
 				FlxTween.tween(dot, {alpha: 0}, 0.5);
 			}
 		}
+
+		FlxG.sound.play(Paths.sound('Logon')); 
 	}
 	
 	private function unlockComputer():Void

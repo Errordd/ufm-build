@@ -35,7 +35,7 @@ class AnimatedHealthIcon extends FlxSprite{ //still counts as an flxSprite
         animation.addByPrefix('Losing_to_Idle', 'dietoidle', 24, false, isPlayer, false); //somehow play backwards
         animation.addByPrefix('Losing', 'die', 24, false, isPlayer, false);
 
-        animation.play('idle');
+        animation.play('Idle');
 
         iconOffsets[0] = (width - 150) / 2;
 		iconOffsets[1] = (height - 150) / 2;
@@ -76,12 +76,12 @@ class AnimatedHealthIcon extends FlxSprite{ //still counts as an flxSprite
         if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 
         frames = Paths.getSparrowAtlas(name, allowGPU);
-        animation.addByPrefix('idle', 'idle', 25, false, isPlayer, false);
-        animation.addByPrefix('idle_to_losing', 'idletodie', 24, false, isPlayer, false);
-        animation.addByPrefix('losing_to_idle', 'dietoidle', 24, false, isPlayer, false); //somehow play backwards
-        animation.addByPrefix('losing', 'die', 24, false, isPlayer, false);
+        animation.addByPrefix('Idle', 'idle', 25, false, isPlayer, false);
+        animation.addByPrefix('Idle_to_Losing', 'idletodie', 24, false, isPlayer, false);
+        animation.addByPrefix('Losing_to_Idle', 'dietoidle', 24, false, isPlayer, false); //somehow play backwards
+        animation.addByPrefix('Losing', 'die', 24, false, isPlayer, false);
 
-        animation.play('idle');
+        animation.play('Idle');
 
         iconOffsets[0] = (width - 150) / 2;
 		iconOffsets[1] = (height - 150) / 2;

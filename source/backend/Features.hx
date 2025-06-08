@@ -1,5 +1,6 @@
 package backend;
 
+import objects.Note;
 import flixel.tweens.FlxEase;
 
 /**

@@ -229,7 +229,7 @@ class PlayState extends MusicBeatState
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
 
-	public var iconP1:HealthIcon;
+	public var iconP1:AnimatedHealthIcon;
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
@@ -293,6 +293,10 @@ class PlayState extends MusicBeatState
 
 	//FEATURES
 	public var Feat:backend.Features;
+	public var stageData:StageFile;
+
+	//holdsplashes
+	public var HoteSplashes:HoteSplashes;
 
 	override public function create()
 	{
@@ -367,7 +371,7 @@ class PlayState extends MusicBeatState
 		}
 		curStage = SONG.stage;
 
-		var stageData:StageFile = StageData.getStageFile(curStage);
+		stageData = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
 			stageData = StageData.dummy();
 		}
@@ -529,6 +533,9 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
 
+		HoteSplashes = new HoteSplashes();
+		add(HoteSplashes);
+
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
 
@@ -556,7 +563,7 @@ class PlayState extends MusicBeatState
 
 		setupHealthBar();
 
-		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1 = new AnimatedHealthIcon('bf', true); //boyfriend.healthIcon //TODO: fix why 'boyfriend.healthIcon' isnt working and causing a crash.
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.data.hideHud;
 		iconP1.alpha = ClientPrefs.data.healthBarAlpha;
@@ -1672,7 +1679,11 @@ class PlayState extends MusicBeatState
             	ease: FlxEase.quadOut,
             	onComplete: function(twn:FlxTween) {
                 	FlxTween.tween(playerStrums.members[i], {y: correctY}, Conductor.crochet / 800, {
-                    	ease: FlxEase.bounceOut
+                    	ease: FlxEase.bounceOut,
+						onComplete: (_)->{
+					        HoteSplashes.initialize(playerStrums); //TODO: add a varible in songs for if all the hold splashes are blue.
+							HoteSplashes.camera = camHUD;
+						}
                 	});
             	}
         	});
@@ -1714,6 +1725,7 @@ class PlayState extends MusicBeatState
             	startDelay: i * 0.05 + 0.9
         	});
     	}
+
 	}
 
 	override function openSubState(SubState:FlxSubState)
@@ -1875,8 +1887,6 @@ class PlayState extends MusicBeatState
 	{
 		//features n stuff.
 		Feat.cmb.upd(elapsed); //force update since i didnt make the class natively able to do it, why? idfk.
-
-
 
 
 
@@ -2101,7 +2111,8 @@ class PlayState extends MusicBeatState
 		var newPercent:Null<Float> = FlxMath.remapToRange(FlxMath.bound(healthBar.valueFunction(), healthBar.bounds.min, healthBar.bounds.max), healthBar.bounds.min, healthBar.bounds.max, 0, 100);
 		healthBar.percent = (newPercent != null ? newPercent : 0);
 
-		iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		//iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		iconP1.decideCurAnim(healthBar.percent);
 		iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; //If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
 		return health;
 	}
@@ -3430,6 +3441,9 @@ class PlayState extends MusicBeatState
 		if(Feat != null){
 			Feat.cmb.HIT(Feat.cmb.info); //call the hit function since it cant be done automatically.
 		}
+
+		HoteSplashes.onNoteHit(note);
+		
 		if(note.wasGoodHit) return;
 		if(cpuControlled && note.ignoreNote) return;
 

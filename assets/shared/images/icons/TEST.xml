@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="TEST.png">
+	<!-- Created with Adobe Animate version 24.0.7.61 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="die0000" x="3" y="3" width="128" height="128" pivotX="3" pivotY="3"/>
+	<SubTexture name="die0001" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0002" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0003" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0004" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0005" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0006" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0007" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0008" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="die0009" x="3" y="3" width="128" height="128"/>
+	<SubTexture name="dietoidle0000" x="3" y="134" width="128" height="128" pivotX="3" pivotY="3"/>
+	<SubTexture name="dietoidle0001" x="3" y="134" width="128" height="128"/>
+	<SubTexture name="dietoidle0002" x="3" y="134" width="128" height="128"/>
+	<SubTexture name="dietoidle0003" x="3" y="134" width="128" height="128"/>
+	<SubTexture name="dietoidle0004" x="3" y="134" width="128" height="128"/>
+	<SubTexture name="idle0000" x="3" y="265" width="128" height="128" pivotX="3" pivotY="3"/>
+	<SubTexture name="idle0001" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0002" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0003" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0004" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0005" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0006" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0007" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0008" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idle0009" x="3" y="265" width="128" height="128"/>
+	<SubTexture name="idletodie0000" x="134" y="3" width="128" height="128" pivotX="3" pivotY="3"/>
+	<SubTexture name="idletodie0001" x="134" y="3" width="128" height="128"/>
+	<SubTexture name="idletodie0002" x="134" y="3" width="128" height="128"/>
+	<SubTexture name="idletodie0003" x="134" y="3" width="128" height="128"/>
+	<SubTexture name="idletodie0004" x="134" y="3" width="128" height="128"/>
+</TextureAtlas>

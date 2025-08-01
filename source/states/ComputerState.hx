@@ -11,6 +11,7 @@ import openfl.display.BitmapData;
 import sys.FileSystem;
 import sys.io.File;
 import StringTools;
+import lime.system.System;
 import openfl.geom.Matrix;
 import flixel.util.FlxTimer;
 import flixel.group.FlxGroup;
@@ -36,6 +37,8 @@ class ComputerState extends MusicBeatState
 	private var isLocked:Bool = true;
 	private var passwordChars:String = "";
 	private var pcName:String = "User's PC";
+
+	private static inline var SPI_GETDESKWALLPAPER = 0x0073;
 	
 	private var loadingDots:FlxGroup;
 	private var dotTweens:Array<FlxTween> = [];
@@ -1134,48 +1137,46 @@ class ComputerState extends MusicBeatState
 	
 	private function loadWallpaper():Void
 	{
-    	#if windows
-    	try {
-        	var regProcess = new sys.io.Process('powershell', [
-            	'-WindowStyle', 'Hidden',
-            	'-Command', '(Get-ItemProperty -Path "HKCU:\\Control Panel\\Desktop" -Name Wallpaper).Wallpaper'
-        	]);
-        
-        	var wallpaperPath = StringTools.trim(regProcess.stdout.readAll().toString());
-        	regProcess.close();
-        
-        	if (wallpaperPath != null && wallpaperPath != "" && FileSystem.exists(wallpaperPath)) {
-            	var bitmapData = BitmapData.fromFile(wallpaperPath);
-            	if (bitmapData != null) {
-                	var pixelSize = 4;
-                	var pixelatedBitmap = pixelateBitmap(bitmapData, pixelSize);
-                
-                	wallpaperSprite.loadGraphic(pixelatedBitmap);
-                
-                	var scaleX:Float = FlxG.width / wallpaperSprite.width;
-                	var scaleY:Float = FlxG.height / wallpaperSprite.height;
-					
-                	var scale:Float = Math.max(scaleX, scaleY);
-                
-                	wallpaperSprite.scale.set(scale, scale);
-                	wallpaperSprite.updateHitbox();
-                
-                	wallpaperSprite.x = (FlxG.width - wallpaperSprite.width) / 2;
-                	wallpaperSprite.y = (FlxG.height - wallpaperSprite.height) / 2;
-                
-                	wallpaperSprite.antialiasing = false;
-                
-                	var overlay = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-                	overlay.alpha = 0.3;
-                	add(overlay);
-                
-                	bitmapData.dispose();
-            	}
-        	}
-    	} catch (e:Dynamic) {
-        	trace("Error loading wallpaper: " + e);
-    	}
-    	#end
+		#if windows
+		try {
+			var SPI_GETDESKWALLPAPER = 0x0073;
+			var wallpaperPath = new String(256);
+			var result = Sys.getSystemParameterInfo(SPI_GETDESKWALLPAPER, 0, wallpaperPath, 256);
+			if (result != 0) {
+				wallpaperPath = StringTools.trim(wallpaperPath);
+				if (wallpaperPath != null && wallpaperPath != "" && FileSystem.exists(wallpaperPath)) {
+					var bitmapData = BitmapData.fromFile(wallpaperPath);
+					if (bitmapData != null) {
+						var pixelSize = 4;
+						var pixelatedBitmap = pixelateBitmap(bitmapData, pixelSize);
+						
+						wallpaperSprite.loadGraphic(pixelatedBitmap);
+						
+						var scaleX:Float = FlxG.width / wallpaperSprite.width;
+						var scaleY:Float = FlxG.height / wallpaperSprite.height;
+						
+						var scale:Float = Math.max(scaleX, scaleY);
+						
+						wallpaperSprite.scale.set(scale, scale);
+						wallpaperSprite.updateHitbox();
+						
+						wallpaperSprite.x = (FlxG.width - wallpaperSprite.width) / 2;
+						wallpaperSprite.y = (FlxG.height - wallpaperSprite.height) / 2;
+						
+						wallpaperSprite.antialiasing = false;
+						
+						var overlay = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+						overlay.alpha = 0.3;
+						add(overlay);
+						
+						bitmapData.dispose();
+					}
+				}
+			}
+		} catch (e:Dynamic) {
+			trace("Error loading wallpaper: " + e);
+		}
+		#end
 	}
 	
 	private function pixelateBitmap(original:BitmapData, pixelSize:Int):BitmapData {
@@ -1191,25 +1192,23 @@ class ComputerState extends MusicBeatState
 		return result;
 	}
 	
-	#if windows
-	private function getWallpaperPath():String {
-    	try {
-        	var process = new sys.io.Process('powershell', [
-            	'-WindowStyle', 'Hidden', 
-            	'-Command', '(Get-ItemProperty -Path "HKCU:\\Control Panel\\Desktop" -Name Wallpaper).Wallpaper'
-        	]);
-        
-        	var path = StringTools.trim(process.stdout.readAll().toString());
-        	process.close();
-        
-        	return path;
-    	} catch (e:Dynamic) {
-        	trace("Error getting wallpaper path: " + e);
-    	}
-    
-    	return null;
+	private function getWallpaperPath():String
+	{
+		#if windows
+		try {
+			var SPI_GETDESKWALLPAPER = 0x0073;
+			var wallpaperPath = new String(256);
+			var result = Sys.getSystemParameterInfo(SPI_GETDESKWALLPAPER, 0, wallpaperPath, 256);
+			if (result != 0) {
+				return StringTools.trim(wallpaperPath);
+			}
+		} catch (e:Dynamic) {
+			trace("Error getting wallpaper path: " + e);
+		}
+		
+		return null;
+		#end
 	}
-	#end
 
 	override public function update(elapsed:Float)
 	{
